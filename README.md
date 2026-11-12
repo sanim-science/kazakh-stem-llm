@@ -39,7 +39,7 @@ By subject, biology gained least on my questions in both models (+2.9 and +4.0);
 - My questions have five options and KazMMLU mostly has four, so part of the gap may be format.
 - The held-out questions come from the same source as the training questions. The +12 and +18 show the models learned this set, not general knowledge.
 - Training targets only the letter, with no solutions.
-- Two models, one training recipe, one prompt.
+- Two models.
 
 ## Files
 
@@ -79,4 +79,4 @@ Code: MIT. Questions: CC BY 4.0. Llama adapter: Llama 3.1 Community License (Bui
 }
 ```
 
-KazMMLU: Togmanov et al., 2025, [arXiv:2502.12829](https://arxiv.org/abs/2502.12829). The code and analysis were written with help from Claude (Anthropic).
+KazMMLU: Togmanov et al., 2025, [arXiv:2502.12829](https://arxiv.org/abs/2502.12829). The analysis was written with help from Claude (Anthropic).
