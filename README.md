@@ -1,4 +1,4 @@
-# Kazakh STEM fine-tuning and KazMMLU
+# Does fine-tuning on new Kazakh STEM questions improve KazMMLU?
 
 I made 2,000 multiple-choice questions in Kazakh (school math, physics, chemistry, biology and informatics, grades 7–11), fine-tuned two open models on them with LoRA, and tested whether they improve on [KazMMLU](https://huggingface.co/datasets/MBZUAI/KazMMLU).
 
