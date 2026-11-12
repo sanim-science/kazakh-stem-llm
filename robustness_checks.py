@@ -2,7 +2,7 @@
 1. two-level bootstrap: resample training seeds AND questions, so the interval includes seed-to-seed variation;
 2. label-free letter-habit correction on KazMMLU STEM (divide each letter's probability by that run's average
    probability for the letter, among questions with the same number of options; the answer key is not used);
-3. your held-out questions split by similarity to the nearest training question (>= 0.6 = 'near').
+3. the held-out questions split by similarity to the nearest training question (>= 0.6 = 'near').
 
 Usage:  python robustness_checks.py heldout_similarity.csv
 """

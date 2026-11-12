@@ -1,5 +1,5 @@
 """Two-panel forest plot: change in accuracy after fine-tuning (3-seed mean, 95 % bootstrap interval over questions),
-your held-out questions vs KazMMLU Kazakh STEM, for Llama-3.1-8B-Instruct and Qwen2.5-7B-Instruct."""
+held-out questions vs KazMMLU Kazakh STEM, for Llama-3.1-8B-Instruct and Qwen2.5-7B-Instruct."""
 import matplotlib
 
 matplotlib.use("Agg")
@@ -56,14 +56,14 @@ for p, (ax, (title, path)) in enumerate(zip(axes, PANELS)):
     ax.spines["bottom"].set_color(GRID)
     ax.tick_params(axis="x", colors=INK2, length=0)
 fig.supxlabel("change in accuracy after fine-tuning (percentage points)", color=INK2, fontsize=10, y=0.025)
-handles = [Line2D([], [], marker="o", ls="-", lw=2, ms=8, color=OWN, mec=SURF, mew=1.5, label="Your 413 held-out questions"),
+handles = [Line2D([], [], marker="o", ls="-", lw=2, ms=8, color=OWN, mec=SURF, mew=1.5, label="Held-out questions (413)"),
            Line2D([], [], marker="o", ls="-", lw=2, ms=8, color=KAZ, mec=SURF, mew=1.5, label="KazMMLU Kazakh STEM (4,174)"),
-           Line2D([], [], marker="o", ls="", ms=4.5, mfc=SURF, mec=INK2, mew=1.2, label="each training seed")]
+           Line2D([], [], marker="o", ls="", ms=4.5, mfc=SURF, mec=INK2, mew=1.2, label="Each training seed")]
 fig.legend(handles=handles, loc="upper left", bbox_to_anchor=(0.012, 0.885), ncol=3, frameon=False, fontsize=9,
            labelcolor=INK2, handlelength=2.2, columnspacing=1.6)
-fig.text(0.015, 0.97, "Both models learn your questions; neither improves on KazMMLU",
+fig.text(0.015, 0.97, "Fine-tuning improves held-out questions, not KazMMLU",
          fontsize=13.5, fontweight="bold", color=INK, ha="left", va="top")
-fig.text(0.015, 0.922, "Mean of 3 training seeds per model; lines are 95% intervals (bootstrap over questions)",
+fig.text(0.015, 0.922, "Change after fine-tuning, mean of 3 training seeds; lines are 95% bootstrap intervals over questions",
          fontsize=9.5, color=INK2, ha="left", va="top")
 fig.subplots_adjust(left=0.115, right=0.985, top=0.79, bottom=0.11, wspace=0.06)
 fig.savefig("two_model_change.png", facecolor=SURF)

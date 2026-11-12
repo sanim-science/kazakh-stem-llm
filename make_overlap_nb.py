@@ -1,22 +1,22 @@
-"""Build overlap_check.ipynb: compares your 2,000 questions with KazMMLU's Kazakh STEM questions,
+"""Build overlap_check.ipynb: compares the 2,000 questions with KazMMLU's Kazakh STEM questions,
 by wording (character n-grams + same numbers) and by meaning (LaBSE sentence embeddings)."""
 import json
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-MD = """# Overlap check: your questions vs KazMMLU
+MD = """# Overlap check: Kazakh STEM MCQ 2000 vs KazMMLU
 
-Before training, every one of your 2,000 questions is compared with every KazMMLU Kazakh STEM question (test and dev splits):
+Before training, each of the 2,000 questions is compared with every KazMMLU Kazakh STEM question (test and dev splits):
 
 * **Wording:** character n-gram similarity, plus a rule for the same numbers reworded.
 * **Meaning:** [LaBSE](https://huggingface.co/sentence-transformers/LaBSE) multilingual sentence embeddings, which also catch paraphrases.
 
-A pair is flagged for review when the meaning score is 0.90 or more, or the wording check finds a near-copy or the same numbers reworded. Flagged is not the same as contaminated: you and Claude review each pair and drop only real duplicates.
+A pair is flagged for review when the meaning score is 0.90 or more, or the wording check finds a near-copy or the same numbers reworded. Flagged pairs are reviewed by hand; flagged training questions are left out of training.
 
 **How to run.** Right panel: Internet = On, Accelerator = GPU T4 x2 (CPU also works, slower). Add Input → Your Datasets → kazakh-stem-2000. Save Version → Save & Run All.
 
-**Output:** `overlap_flagged.csv` (pairs to review) and `overlap_top1.csv` (closest KazMMLU question for each of yours). Send both to Claude.
+**Output:** `overlap_flagged.csv` (pairs to review) and `overlap_top1.csv` (closest KazMMLU question for each question).
 """
 
 SETTINGS = """# ===== Settings =====
@@ -47,7 +47,7 @@ def numsig(s):
 
 DATA = """ours = [json.loads(l) for l in open(glob.glob("/kaggle/input/**/questions_clean.jsonl", recursive=True)[0], encoding="utf-8")]
 ours = pd.DataFrame(ours)
-print("your questions:", len(ours), ours["split"].value_counts().to_dict())
+print("questions:", len(ours), ours["split"].value_counts().to_dict())
 
 REPO = "MBZUAI/KazMMLU"
 STEM = ["Math (High School in kaz)", "Physics (High School in kaz)", "Chemistry (High School in kaz)",
@@ -109,7 +109,7 @@ for i, r in ours.iterrows():
         kind, j, why = reasons[0] if reasons else ("meaning", js, f"meaning {SEM[i, js]:.2f}")
         flagged.append(dict(level=level, reason="; ".join(x[2] for x in reasons) or why, id=r.id, split=r.split,
                             subject=r.subject, meaning=round(float(SEM[i, j]), 4), wording=round(float(LEX[i, j]), 4),
-                            your_question=ours_full[i], kazmmlu_subset=ref.at[j, "subset"], kazmmlu_file=ref.at[j, "file"],
+                            own_question=ours_full[i], kazmmlu_subset=ref.at[j, "subset"], kazmmlu_file=ref.at[j, "file"],
                             kazmmlu_id=ref.at[j, "ID"], kazmmlu_question=ref_full[j]))
 top = pd.DataFrame(top)
 flagged = pd.DataFrame(flagged)
@@ -118,7 +118,7 @@ if len(flagged):
 top.to_csv("/kaggle/working/overlap_top1.csv", index=False)
 flagged.to_csv("/kaggle/working/overlap_flagged.csv", index=False)
 
-print("closest-match meaning score, your questions:")
+print("closest-match meaning score:")
 print(top["meaning_top1"].describe(percentiles=[.5, .9, .99]).round(3).to_string())
 n_flag = int((flagged["level"] == "flag").sum()) if len(flagged) else 0
 n_border = int((flagged["level"] == "borderline").sum()) if len(flagged) else 0
@@ -126,8 +126,8 @@ print(f"\\nflagged for review: {n_flag}   borderline (meaning {LABSE_SHOW}-{LABS
 if n_flag:
     print(flagged[flagged.level == "flag"].groupby(["split", "subject"]).size().to_string())
     for r in flagged[flagged.level == "flag"].head(5).itertuples():
-        print(f"\\n[{r.id}] {r.reason}\\n  yours:   {r.your_question[:160]}\\n  KazMMLU: {r.kazmmlu_question[:160]}")
-print("\\nDownload overlap_flagged.csv and overlap_top1.csv from the Output tab and send them to Claude.")
+        print(f"\\n[{r.id}] {r.reason}\\n  ours:    {r.own_question[:160]}\\n  KazMMLU: {r.kazmmlu_question[:160]}")
+print("\\nsaved overlap_flagged.csv and overlap_top1.csv")
 """
 
 

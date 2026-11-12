@@ -14,19 +14,19 @@ MD_INTRO = """# KazMMLU Kazakh STEM: evaluation
 Scores one model on
 * the five Kazakh STEM subjects of [KazMMLU](https://huggingface.co/datasets/MBZUAI/KazMMLU) (test split, about 4,200 questions),
 * two Kazakh non-STEM subjects (Kazakh History, Geography), to check that fine-tuning doesn't damage other knowledge,
-* your own 413 held-out questions (`test_own.csv` from the kazakh-stem-2000 dataset).
+* the 413 held-out questions of Kazakh STEM MCQ 2000 (`test_own.csv`).
 
-**Method.** Zero-shot. Each question is shown once with an English instruction; the model's probability for each answer letter is read off, and the most likely letter that exists in that question is its answer (the method KazMMLU used for open models). Same code before and after fine-tuning: only `USE_ADAPTER` changes.
+**Method.** Zero-shot. Each question is shown once with an English instruction; the model's probability for each answer letter is read off, and the most likely letter that exists in that question is its answer. Same code before and after fine-tuning: only `USE_ADAPTER` changes.
 
 **How to run.** Right panel: Accelerator = GPU T4 x2, Internet = On, Add-ons → Secrets → HF_TOKEN switched on (needed for Llama). Add Input → Your Datasets → kazakh-stem-2000. Edit the settings cell, then Save Version → Save & Run All.
 
-**Output** (Output tab): `results_<RUN_NAME>.csv` (one row per question) and `summary_<RUN_NAME>.json`. Send both to Claude.
+**Output:** `results_<RUN_NAME>.csv` (one row per question) and `summary_<RUN_NAME>.json`.
 """
 
 SETTINGS = """# ===== Settings: change only these =====
 MODEL = "llama"          # "llama" = meta-llama/Llama-3.1-8B-Instruct (needs approved Meta access)
                          # "qwen"  = Qwen/Qwen2.5-7B-Instruct (no access form)
-USE_ADAPTER = False      # False = starting score (Step 2); True = score with your trained adapter (Step 5)
+USE_ADAPTER = False      # False = base model; True = base model + trained adapter
 RUN_NAME = "base"        # names the output files, e.g. "base", "tuned_seed1"
 BATCH_SIZE = 8           # lower to 4 if you see "CUDA out of memory"
 INCLUDE_NONSTEM = True   # also score two non-STEM Kazakh subjects
@@ -49,7 +49,7 @@ print("GPUs:", [torch.cuda.get_device_name(i) for i in range(n_gpu)], [f"{m:.0f}
 if n_gpu == 0 or sum(mem) < 28:
     raise RuntimeError("Needs GPU T4 x2 (two 15 GB GPUs): right panel -> Session options -> Accelerator.")
 if version.parse(transformers.__version__) < version.parse("4.45"):
-    raise RuntimeError("transformers is older than 4.45; send this message to Claude.")
+    raise RuntimeError("transformers 4.45 or newer is required.")
 
 HF_TOKEN = None
 try:
@@ -95,7 +95,7 @@ if own:
     got, sk = items_from_own(df)
     items += got
     skipped["own_test"] = sk
-    print(f"{'your held-out questions':40s} {len(got):5d} questions ({sk} skipped)  [{own[0]}]")
+    print(f"{'held-out questions':40s} {len(got):5d} questions ({sk} skipped)  [{own[0]}]")
 else:
     print("test_own.csv not found: Add Input -> Your Datasets -> kazakh-stem-2000. Continuing with KazMMLU only.")
 print("total:", len(items))
@@ -109,8 +109,7 @@ try:
     tok = AutoTokenizer.from_pretrained(model_id, token=HF_TOKEN)
 except Exception as e:
     if MODEL == "llama":
-        raise RuntimeError("Can't open Llama: Meta hasn't approved your access yet, or the HF_TOKEN secret is off. "
-                           "Set MODEL = 'qwen' in the settings cell, or wait for Meta's email.") from e
+        raise RuntimeError("Can't open Llama: no access to the gated model, or the HF_TOKEN secret is off.") from e
     raise
 tok.padding_side = "left"
 if tok.pad_token is None:
@@ -123,7 +122,7 @@ if USE_ADAPTER:
     from peft import PeftModel
     cfgs = glob.glob("/kaggle/input/**/adapter_config.json", recursive=True)
     if len(cfgs) != 1:
-        raise RuntimeError(f"Expected one adapter in the inputs (adapter_config.json), found {cfgs}. Add your adapter dataset as an input.")
+        raise RuntimeError(f"Expected one adapter in the inputs (adapter_config.json), found {cfgs}. Add the training run's output as an input.")
     adapter_dir = os.path.dirname(cfgs[0])
     print("adapter:", adapter_dir, "| trained on:", json.load(open(cfgs[0])).get("base_model_name_or_path"))
     model = PeftModel.from_pretrained(model, adapter_dir)
@@ -175,7 +174,7 @@ for it, r in zip(probe, probe_res):
 mass = sum(r["letter_mass"] for r in probe_res) / len(probe)
 print(f"mean probability on answer letters: {mass:.2f}")
 if mass < 0.5:
-    print("WARNING: the model puts little probability on the answer letters. Send this output to Claude before trusting the scores.")
+    print("WARNING: the model puts little probability on the answer letters. Check the prompt before trusting the scores.")
 """
 
 RUN = """order = sorted(range(len(items)), key=lambda i: len(items[i]["text"]))   # similar lengths together = less padding
@@ -209,7 +208,7 @@ for s, v in summary["results"].items():
     for sub, w in v["by_subset"].items():
         print(f"    {sub:40s} {w['accuracy']:.1%}   n = {w['n']}")
 print(f"\\nmean probability on answer letters: {summary['mean_letter_mass']:.2f}")
-print("Download results_*.csv and summary_*.json from the Output tab and send them to Claude.")
+print(f"saved results_{RUN_NAME}.csv and summary_{RUN_NAME}.json")
 """
 
 

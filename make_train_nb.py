@@ -1,4 +1,4 @@
-"""Build train_lora.ipynb: LoRA fine-tuning on your training questions (training only; score the adapter
+"""Build train_lora.ipynb: LoRA fine-tuning on the training questions (training only; score the adapter
 afterwards with eval_kazmmlu.ipynb, whose scoring cells are imported from make_eval_nb)."""
 import json
 import os
@@ -7,10 +7,10 @@ from make_eval_nb import DATA, SCORING, SETUP, cell, common
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-MD = """# Fine-tune on your Kazakh STEM questions
+MD = """# LoRA fine-tuning on Kazakh STEM MCQ 2000
 
 One run = one seed, **training only**:
-* A LoRA adapter is trained on your training questions (the 413 held-out questions and the 10 flagged by the overlap check are never used). The model stays in 16-bit across both T4s, the same precision as the evaluation; only the adapter (about 0.5% of the weights) learns.
+* A LoRA adapter is trained on the training questions (the 413 held-out questions and the 10 flagged by the overlap check are never used). The model stays in 16-bit across both T4s, the same precision as the evaluation; only the adapter (about 0.5% of the weights) learns.
 * The model learns to answer each question with its letter, using **exactly the evaluation prompt**. 10% of the training questions (the same ones for every run) are held back; after each epoch the adapter is kept if validation accuracy is the best so far.
 
 **Then evaluate in a fresh session** with eval_kazmmlu.ipynb (`USE_ADAPTER = True`, this notebook's output added as an input). Scoring in the same session right after an hour of training crashed the GPU once; a fresh session is what worked for the starting scores.
@@ -28,7 +28,7 @@ SEED = 1                 # run once each with 1, 2 and 3
 
 # Fixed in advance; keep these the same for every run
 EXCLUDE_IDS = ["BIO-0230", "PHY-0329", "MAT-0030", "PHY-0413", "MAT-0357",      # flagged by the
-               "MAT-0012", "CHE-0034", "PHY-0360", "PHY-0367", "MAT-0073"]      # overlap check (Step 3)
+               "MAT-0012", "CHE-0034", "PHY-0360", "PHY-0367", "MAT-0073"]      # overlap check
 EPOCHS = 2
 LR = 2e-4
 LORA_R, LORA_ALPHA = 16, 16
@@ -51,7 +51,7 @@ if not qc:
 allq = pd.DataFrame([json.loads(l) for l in open(qc[0], encoding="utf-8")])
 missing = sorted(set(EXCLUDE_IDS) - set(allq["id"]))
 if missing:
-    raise RuntimeError(f"EXCLUDE_IDS not found in your questions: {missing}")
+    raise RuntimeError(f"EXCLUDE_IDS not found in the questions: {missing}")
 pool = allq[(allq["split"] == "train") & (~allq["id"].isin(EXCLUDE_IDS))].copy()
 # the same validation questions for every seed and model: chosen by a hash of the id
 pool["h"] = pool["id"].map(lambda x: int(hashlib.sha1(("val-" + x).encode("utf-8")).hexdigest()[:8], 16) / 2**32)
@@ -157,7 +157,7 @@ for epoch in range(1, EPOCHS + 1):
             mb = [train_items[i] for i in group[m:m + MICRO_BATCH]]
             loss = batch_loss(mb)
             if not torch.isfinite(loss):
-                raise RuntimeError(f"loss is {loss.item()} at step {step}; send this output to Claude")
+                raise RuntimeError(f"loss is {loss.item()} at step {step}")
             scaler.scale(loss * len(mb) / len(group)).backward()
             losses.append(loss.item())
         scaler.unscale_(opt)
