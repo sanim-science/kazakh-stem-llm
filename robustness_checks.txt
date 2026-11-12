@@ -1,0 +1,18 @@
+
+===== Llama-3.1-8B-Instruct =====
+two-level 95% interval  own_test         change +12.3  [ +7.0, +17.7]
+two-level 95% interval  kazmmlu_stem     change  +0.6  [ -1.1,  +2.3]
+two-level 95% interval  kazmmlu_nonstem  change  -0.1  [ -2.3,  +2.1]
+KazMMLU STEM raw        40.8% -> 41.3% (+0.6)
+KazMMLU STEM corrected  41.7% -> 41.4% (-0.4)  (letter habit removed)
+held-out not near       n=338  46.4% -> 57.3%  change +10.8
+held-out near (>= 0.6)  n= 75  29.3% -> 48.4%  change +19.1
+
+===== Qwen2.5-7B-Instruct =====
+two-level 95% interval  own_test         change +18.1  [+13.1, +23.1]
+two-level 95% interval  kazmmlu_stem     change  -0.8  [ -2.8,  +1.2]
+two-level 95% interval  kazmmlu_nonstem  change  +0.6  [ -1.7,  +2.7]
+KazMMLU STEM raw        47.0% -> 46.2% (-0.8)
+KazMMLU STEM corrected  47.2% -> 46.8% (-0.4)  (letter habit removed)
+held-out not near       n=338  44.4% -> 60.6%  change +16.2
+held-out near (>= 0.6)  n= 75  38.7% -> 65.3%  change +26.7

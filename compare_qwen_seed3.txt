@@ -1,0 +1,23 @@
+
+=== results_tuned_qwen_seed3.csv vs results_base_qwen.csv  (6632 questions) ===
+test                                        before   after  change           95% CI  wrong->right right->wrong  McNemar p
+kazmmlu_nonstem                              36.9%   36.9%   +0.0  [ -2.3,  +2.4]           297          297  1
+  kazmmlu_nonstem / Geography (High School   42.7%   43.2%   +0.6  [ -2.5,  +3.8]           142          136  0.76
+  kazmmlu_nonstem / Kazakh History (High S   31.2%   30.6%   -0.6  [ -4.0,  +2.8]           155          161  0.78
+kazmmlu_stem                                 47.0%   45.5%   -1.4  [ -3.2,  +0.4]           686          746  0.12
+  kazmmlu_stem / Biology (High School in k   45.3%   42.9%   -2.4  [ -5.6,  +0.8]           128          153  0.15
+  kazmmlu_stem / Chemistry (High School in   45.1%   44.5%   -0.6  [ -4.1,  +2.8]           160          166  0.78
+  kazmmlu_stem / Informatics (High School    58.8%   59.4%   +0.6  [ -7.5,  +8.8]            22           21  1
+  kazmmlu_stem / Math (High School in kaz)   51.4%   50.3%   -1.1  [ -4.8,  +2.8]           188          199  0.61
+  kazmmlu_stem / Physics (High School in k   44.1%   42.1%   -2.0  [ -6.0,  +2.1]           188          207  0.37
+own_test                                     43.3%   61.3%  +17.9  [+12.6, +23.2]           107           33  2.6e-10
+  own_test / biology                         59.3%   62.6%   +3.3  [ -6.6, +13.2]            12            9  0.66
+  own_test / chemistry                       47.1%   61.2%  +14.1  [ +1.2, +27.1]            22           10  0.05
+  own_test / informatics                     51.4%   81.1%  +29.7  [+10.8, +48.6]            13            2  0.0074
+  own_test / math                            32.4%   59.0%  +26.7  [+16.2, +37.1]            33            5  4.3e-06
+  own_test / physics                         33.7%   54.7%  +21.1  [ +9.5, +32.6]            27            7  0.00082
+
+answer-letter habits on 4-option KazMMLU STEM questions (share of answers):
+   correct key  A 27%  B 25%  C 23%  D 25%
+   before       A 31%  B 33%  C 19%  D 16%
+   after        A 15%  B 15%  C 29%  D 40%

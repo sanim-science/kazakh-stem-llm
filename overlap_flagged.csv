@@ -1,0 +1,46 @@
+level,reason,id,split,subject,meaning,wording,kazmmlu_subset,kazmmlu_file,kazmmlu_id
+flag,meaning 0.94,BIO-0230,train,biology,0.9389,0.6051,Biology (High School in kaz),test.csv,773
+flag,meaning 0.91,PHY-0329,train,physics,0.9104,0.4275,Physics (High School in kaz),test.csv,16974
+flag,meaning 0.91,MAT-0030,train,math,0.9055,0.5617,Math (High School in kaz),test.csv,14799
+flag,meaning 0.91,PHY-0413,train,physics,0.9055,0.6888,Physics (High School in kaz),test.csv,17490
+flag,meaning 0.90,MAT-0357,train,math,0.9025,0.2764,Math (High School in kaz),test.csv,14291
+flag,"same numbers, wording 0.57",MAT-0012,train,math,0.8604,0.5671,Math (High School in kaz),test.csv,14254
+flag,wording 1.00,CHE-0034,train,chemistry,0.848,1.0,Chemistry (High School in kaz),test.csv,2881
+flag,"same numbers, wording 0.50",PHY-0360,train,physics,0.7436,0.5006,Physics (High School in kaz),test.csv,17432
+flag,"same numbers, wording 0.57",PHY-0367,train,physics,0.7238,0.5691,Physics (High School in kaz),test.csv,17666
+flag,"same numbers, wording 0.57",MAT-0073,train,math,0.5975,0.5661,Math (High School in kaz),test.csv,14899
+borderline,meaning 0.90,MAT-0252,train,math,0.8978,0.5542,Math (High School in kaz),test.csv,14938
+borderline,meaning 0.89,MAT-0284,train,math,0.8859,0.7569,Math (High School in kaz),test.csv,14583
+borderline,meaning 0.88,CHE-0216,train,chemistry,0.8845,0.5751,Chemistry (High School in kaz),test.csv,3326
+borderline,meaning 0.88,MAT-0384,train,math,0.8831,0.3436,Math (High School in kaz),test.csv,14418
+borderline,meaning 0.88,MAT-0377,test,math,0.8813,0.7203,Math (High School in kaz),test.csv,14383
+borderline,meaning 0.88,PHY-0330,train,physics,0.8802,0.6471,Physics (High School in kaz),test.csv,16962
+borderline,meaning 0.88,PHY-0448,train,physics,0.8772,0.493,Physics (High School in kaz),test.csv,17306
+borderline,meaning 0.87,PHY-0385,train,physics,0.8749,0.6875,Physics (High School in kaz),test.csv,17877
+borderline,meaning 0.87,CHE-0226,train,chemistry,0.8734,0.5288,Chemistry (High School in kaz),test.csv,3492
+borderline,meaning 0.87,MAT-0481,test,math,0.8733,0.3988,Math (High School in kaz),test.csv,14706
+borderline,meaning 0.87,MAT-0405,train,math,0.8724,0.4432,Math (High School in kaz),test.csv,14526
+borderline,meaning 0.87,CHE-0192,train,chemistry,0.8696,0.4445,Chemistry (High School in kaz),test.csv,3121
+borderline,meaning 0.87,PHY-0338,test,physics,0.868,0.3929,Physics (High School in kaz),test.csv,17460
+borderline,meaning 0.87,MAT-0028,train,math,0.8667,0.4314,Math (High School in kaz),test.csv,14376
+borderline,meaning 0.87,MAT-0345,train,math,0.8667,0.4349,Math (High School in kaz),test.csv,14526
+borderline,meaning 0.86,MAT-0388,train,math,0.864,0.1445,Math (High School in kaz),test.csv,14171
+borderline,meaning 0.86,MAT-0390,train,math,0.8638,0.4729,Math (High School in kaz),test.csv,14332
+borderline,meaning 0.86,MAT-0020,train,math,0.8637,0.4949,Math (High School in kaz),test.csv,14842
+borderline,meaning 0.86,MAT-0358,test,math,0.8627,0.4391,Math (High School in kaz),test.csv,14492
+borderline,meaning 0.86,MAT-0327,test,math,0.8617,0.4314,Math (High School in kaz),test.csv,14706
+borderline,meaning 0.86,PHY-0019,train,physics,0.8617,0.678,Physics (High School in kaz),test.csv,17785
+borderline,meaning 0.86,MAT-0132,train,math,0.8603,0.6914,Math (High School in kaz),test.csv,14936
+borderline,meaning 0.86,MAT-0451,test,math,0.8602,0.5931,Math (High School in kaz),test.csv,14990
+borderline,meaning 0.86,BIO-0214,train,biology,0.8601,0.5012,Biology (High School in kaz),test.csv,822
+borderline,meaning 0.86,MAT-0268,test,math,0.8593,0.7241,Math (High School in kaz),test.csv,14819
+borderline,meaning 0.86,MAT-0468,train,math,0.8566,0.4184,Math (High School in kaz),test.csv,14400
+borderline,meaning 0.86,MAT-0507,train,math,0.8565,0.4808,Math (High School in kaz),test.csv,14938
+borderline,meaning 0.86,INF-0111,train,informatics,0.8558,0.1856,Informatics (High School in kaz),test.csv,8003
+borderline,meaning 0.85,MAT-0216,train,math,0.854,0.316,Math (High School in kaz),test.csv,14712
+borderline,meaning 0.85,MAT-0123,test,math,0.8534,0.297,Math (High School in kaz),test.csv,14862
+borderline,meaning 0.85,MAT-0348,train,math,0.8534,0.2146,Math (High School in kaz),test.csv,14220
+borderline,meaning 0.85,PHY-0388,test,physics,0.8529,0.4768,Physics (High School in kaz),test.csv,17102
+borderline,meaning 0.85,MAT-0181,train,math,0.8524,0.3098,Math (High School in kaz),test.csv,14759
+borderline,meaning 0.85,MAT-0406,train,math,0.8517,0.1486,Math (High School in kaz),test.csv,14220
+borderline,meaning 0.85,MAT-0286,train,math,0.8513,0.3994,Math (High School in kaz),test.csv,14706

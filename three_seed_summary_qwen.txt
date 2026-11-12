@@ -1,0 +1,16 @@
+test                                                     n  before   after  change           95% CI       p  p_holm  per seed
+kazmmlu_nonstem                                       2045   36.9%   37.5%   +0.6  [ -1.5,  +2.7]    0.59          +0.7 / +1.0 / +0.0
+kazmmlu_nonstem / Geography (High School in kaz)      1022   42.7%   43.6%   +0.9  [ -1.8,  +3.7]    0.51       1  +0.8 / +1.5 / +0.6
+kazmmlu_nonstem / Kazakh History (High School in kaz  1023   31.2%   31.3%   +0.2  [ -2.9,  +3.2]    0.94       1  +0.6 / +0.5 / -0.6
+kazmmlu_stem                                          4174   47.0%   46.2%   -0.8  [ -2.4,  +0.8]    0.32          -1.6 / +0.6 / -1.4
+kazmmlu_stem / Biology (High School in kaz)           1022   45.3%   42.6%   -2.7  [ -5.5,  +0.2]   0.068    0.34  -3.2 / -2.3 / -2.4
+kazmmlu_stem / Chemistry (High School in kaz)         1022   45.1%   44.9%   -0.2  [ -3.3,  +2.9]    0.89       1  -2.1 / +2.1 / -0.6
+kazmmlu_stem / Informatics (High School in kaz)        160   58.8%   59.4%   +0.6  [ -6.5,  +7.9]    0.89       1  -1.9 / +3.1 / +0.6
+kazmmlu_stem / Math (High School in kaz)              1011   51.4%   52.3%   +0.9  [ -2.6,  +4.2]    0.62       1  +1.1 / +2.6 / -1.1
+kazmmlu_stem / Physics (High School in kaz)            959   44.1%   42.6%   -1.5  [ -5.1,  +2.3]    0.43       1  -2.0 / -0.4 / -2.0
+own_test                                               413   43.3%   61.4%  +18.1  [+13.2, +22.8]       0          +18.4 / +17.9 / +17.9
+own_test / biology                                      91   59.3%   63.4%   +4.0  [ -5.1, +13.6]    0.42    0.42  +3.3 / +5.5 / +3.3
+own_test / chemistry                                    85   47.1%   60.4%  +13.3  [ +1.6, +25.1]   0.029   0.058  +14.1 / +11.8 / +14.1
+own_test / informatics                                  37   51.4%   82.9%  +31.5  [+15.3, +48.6]  0.0004  0.0012  +35.1 / +29.7 / +29.7
+own_test / math                                        105   32.4%   58.4%  +26.0  [+17.1, +35.2]       0       0  +24.8 / +26.7 / +26.7
+own_test / physics                                      95   33.7%   55.4%  +21.8  [+12.3, +31.2]       0       0  +23.2 / +21.1 / +21.1
